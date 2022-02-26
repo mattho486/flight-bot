@@ -15,7 +15,89 @@ module.exports = {
         const flightNumber = interaction.options.getString('flightnumber')
         const airline = interaction.options.getString('airline')
         const flightDate = interaction.options.getString('flightdate')
-        let testResponse = {    //TODO REMOVE AFTER TEST
+
+        let testResponseScheduled = {
+            data:[{
+                flight_date: '2022-02-25',
+                flight_status: 'scheduled',
+                departure: {
+                    airport: 'Dallas/Fort Worth International',
+                    timezone: 'America/Chicago',
+                    iata: 'DFW',
+                    icao: 'KDFW',
+                    terminal: 'B',
+                    gate: 'B9',
+                    delay: 224,
+                    scheduled: '2022-02-25T12:49:00+00:00',
+                    estimated: '2022-02-25T12:49:00+00:00',
+                    actual: '2022-02-25T16:33:00+00:00',
+                    estimated_runway: '2022-02-25T16:33:00+00:00',
+                    actual_runway: '2022-02-25T16:33:00+00:00'
+                },
+                arrival: {
+                    airport: 'John F Kennedy International',
+                    timezone: 'America/New_York',
+                    iata: 'JFK',
+                    icao: 'KJFK',
+                    terminal: '8',
+                    gate: '38',
+                    baggage: null,
+                    delay: 181,
+                    scheduled: '2022-02-25T17:16:00+00:00',
+                    estimated: '2022-02-25T17:16:00+00:00',
+                    actual: null,
+                    estimated_runway: null,
+                    actual_runway: null
+                },
+                airline: {name: 'American Airlines', iata: 'AA', icao: 'AAL'},
+                flight: {number: '606', iata: 'AA606', icao: 'AAL606', codeshared: null},
+                aircraft: null,
+                live: null
+            }]
+            }
+
+
+        let testResponseLanded = {       //TODO REMOVE AFTER TEST
+            data :[{
+            flight_date: '2022-02-25',
+            flight_status: 'landed',
+            departure: {
+                 airport: 'Simmons Nott',
+                 timezone: 'America/New_York',
+                 iata: 'EWN',
+                 icao: 'KEWN',
+                 terminal: null,
+                 gate: '3',
+                 delay: 16,
+                 scheduled: '2022-02-25T18:17:00+00:00',
+                 estimated: '2022-02-25T18:17:00+00:00',
+                 actual: '2022-02-25T18:37:00+00:00',
+                 estimated_runway: '2022-02-25T18:37:00+00:00',
+                 actual_runway: '2022-02-25T18:37:00+00:00'
+               },
+           arrival: {
+                 airport: 'Charlotte Douglas',
+                 timezone: 'America/New_York',
+                 iata: 'CLT',
+                 icao: 'KCLT',
+                 terminal: '1',
+                 gate: 'E8',
+                 baggage: 'E',
+                 delay: null,
+                 scheduled: '2022-02-25T19:39:00+00:00',
+                 estimated: '2022-02-25T19:39:00+00:00',
+                 actual: '2022-02-25T19:33:00+00:00',
+                 estimated_runway: '2022-02-25T19:33:00+00:00',
+                 actual_runway: '2022-02-25T19:33:00+00:00'
+               },
+           airline: { name: 'American Airlines', iata: 'AA', icao: 'AAL' },
+           flight: { number: '5349', iata: 'AA5349', icao: 'AAL5349', codeshared: null },
+           aircraft: null,
+           live: null
+            }]
+        }
+
+        let testResponseActive = {    //TODO REMOVE AFTER TEST
             "pagination": {
                 "limit": 100,
                 "offset": 0,
@@ -85,12 +167,12 @@ module.exports = {
                 },
             ]
         }
-       // let data = testResponse.data[0]  //TODO UNDO DECLARATION AFTER TEST
-        let data
+        let data = testResponseActive.data[0]  //TODO UNDO DECLARATION AFTER TEST
+        //let data
         let errorFlag = false
 
           //TODO UNCOMMENT AFTER TEST
-        if (flightDate === null) {
+        /**if (flightDate === null) {
             //real time
             flightdata.flights(
                 {
@@ -152,10 +234,10 @@ module.exports = {
 
                     DisplayFlightData(interaction, data)
                 })
-        }
+        }**/
 
 
-
+        await DisplayFlightData(interaction, data)
 
 
 

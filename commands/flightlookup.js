@@ -2,19 +2,21 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const {CreateDefaultEmbed} = require("../helpers/CreateDefaultEmbed");
 const flightdata = require('flight-data');
 const {DisplayFlightData} = require("../helpers/DisplayFlightData");
+const {LoadingScreen} = require("../helpers/LoadingScreen");
+const {CreateDefaultEmbedEdit} = require("../helpers/CreateDefaultEmbedEdit");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('flightlookup')
         .setDescription('Look up historical/future or real-time flight information')
         .addStringOption(option => option.setName('flightnumber').setDescription('The flight\'s number').setRequired(true))
-        .addStringOption(option => option.setName('airline').setDescription('The flight\'s airline').setRequired(true))
-        .addStringOption(option => option.setName('flightdate').setDescription('The flight\'s date: YYYY-MM-DD')),
+        .addStringOption(option => option.setName('airline').setDescription('The flight\'s airline').setRequired(true)),
     async execute(interaction) {
 
         const flightNumber = interaction.options.getString('flightnumber')
         const airline = interaction.options.getString('airline')
-        const flightDate = interaction.options.getString('flightdate')
+
+        await LoadingScreen(interaction)
 
         let testResponseScheduled = {
             data:[{
@@ -167,77 +169,51 @@ module.exports = {
                 },
             ]
         }
-        let data = testResponseActive.data[0]  //TODO UNDO DECLARATION AFTER TEST
-        //let data
+        //let data = testResponseActive.data[0]  //TODO UNDO DECLARATION AFTER TEST
+        let data
         let errorFlag = false
 
           //TODO UNCOMMENT AFTER TEST
-        /**if (flightDate === null) {
-            //real time
-            flightdata.flights(
-                {
-                    API_TOKEN: 'b5409bfc9962b2f21819efecc0adec2b',
-                    options: {
-                        limit: 1,
-                        airline_name : airline,
-                        flight_number: flightNumber
-                        //arr_iata: 'SEA'
-                    }
-                })
-                .then(response => {
-                    console.log(response.data[0])
-                    data = response.data[0]
-                })
-                .catch(error => {
-                    errorFlag = true
-                }).then(response => {
-                    if (errorFlag) {
-                        CreateDefaultEmbed(interaction, `An error occured!`)
-                        return
-                    }
 
-                    if (!data) {
-                        CreateDefaultEmbed(interaction, `Could not find flight!`)
-                        return
-                    }
+        //real time
 
-                    DisplayFlightData(interaction, data)
-                })
-        } else {
-            //historical/future
-            flightdata.flights(
-                {
-                    API_TOKEN: 'b5409bfc9962b2f21819efecc0adec2b',
-                    options: {
-                        limit: 1,
-                        flight_number: flightNumber,
-                        airline_name : airline,
-                        flight_date: flightDate,
-                        //arr_iata: 'SEA'
-                    }
-                })
-                .then(response => {
-                    data = response.data[0]
-                })
-                .catch(error => {
-                    errorFlag = true
-                }).then(response => {
-                    if (errorFlag) {
-                        CreateDefaultEmbed(interaction, `An error occured!`)
-                        return
-                    }
+        flightdata.flights(
+            {
+                API_TOKEN: 'd2db267b08e16708696251624d3a23c1',
+                options: {
+                    limit: 1,
+                    airline_name : airline,
+                    flight_number: flightNumber
+                    //arr_iata: 'SEA'
+                }
+            })
+            .then(response => {
+                //console.log(response.data[0])
+                data = response.data[0]
+            })
+            .catch(error => {
+                errorFlag = true
+                //console.log(error)
+            }).then(response => {
+                if (errorFlag) {
+                    CreateDefaultEmbedEdit(interaction, `An error occured!`)
+                    return
+                }
 
-                    if (!data) {
-                        CreateDefaultEmbed(interaction, `Could not find flight!`)
-                        return
-                    }
+                if (!data) {
+                    CreateDefaultEmbedEdit(interaction, `Could not find flight! Please make sure that you have entered the right flight number and the airline name.`)
+                    return
+                }
 
-                    DisplayFlightData(interaction, data)
-                })
-        }**/
+                DisplayFlightData(interaction, data)
+            })
+
+        //await DisplayFlightData(interaction, data)
 
 
-        await DisplayFlightData(interaction, data)
+
+
+
 
 
 

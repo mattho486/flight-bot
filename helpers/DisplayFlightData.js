@@ -23,7 +23,7 @@ async function DisplayFlightData(interaction, data) {
                    .setDisabled(true)
            );
 
-       await interaction.reply({embeds : [embed], components : [select, button]})
+       await interaction.editReply({embeds : [embed], components : [select, button]})
 
        const collectorFilter = i => i.user.id === interaction.user.id && i.message.interaction.id === interaction.id;
 

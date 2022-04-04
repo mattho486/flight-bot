@@ -11,7 +11,7 @@ module.exports = {
             .setColor('#25548c')
             .setAuthor({ name: 'Help', iconURL: interaction.user.avatarURL()})
             //.setThumbnail('') FLIGHT BOT LOGO
-            .addField(name = "Flight Tracker", "`Real time tracking`, `blah blah`")
+            .addField(name = "Flight Tracker", "`flightlookup`")
 
         await interaction.reply({ embeds: [helpEmbed] });
     },

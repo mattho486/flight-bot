@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const {CreateDefaultEmbed} = require("../helpers/CreateDefaultEmbed");
 const flightdata = require('flight-data');
 const {DisplayFlightData} = require("../helpers/DisplayFlightData");
+const {LoadingScreen} = require("../helpers/LoadingScreen");
+const {CreateDefaultEmbedEdit} = require("../helpers/CreateDefaultEmbedEdit");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,6 +16,7 @@ module.exports = {
         const flightNumber = interaction.options.getString('flightnumber')
         const airline = interaction.options.getString('airline')
 
+        await LoadingScreen(interaction)
 
         let testResponseScheduled = {
             data:[{
@@ -172,7 +175,6 @@ module.exports = {
 
           //TODO UNCOMMENT AFTER TEST
 
-        console.log("d")
         //real time
 
         flightdata.flights(
@@ -186,20 +188,20 @@ module.exports = {
                 }
             })
             .then(response => {
-                console.log(response.data[0])
+                //console.log(response.data[0])
                 data = response.data[0]
             })
             .catch(error => {
                 errorFlag = true
-                console.log(error)
+                //console.log(error)
             }).then(response => {
                 if (errorFlag) {
-                    CreateDefaultEmbed(interaction, `An error occured!`)
+                    CreateDefaultEmbedEdit(interaction, `An error occured!`)
                     return
                 }
 
                 if (!data) {
-                    CreateDefaultEmbed(interaction, `Could not find flight!`)
+                    CreateDefaultEmbedEdit(interaction, `Could not find flight! Please make sure that you have entered the right flight number and the airline name.`)
                     return
                 }
 

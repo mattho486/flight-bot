@@ -66,12 +66,12 @@ module.exports = {
 
                     const res = JSON.parse(body)
                     console.log(res);
-                    if (!res.searchResults) {
-                        CreateDefaultEmbedEdit(interaction, `No results found for that query`)
+                    if (!res.searchResults || res.searchResults.results.length === 0) {
+                        CreateDefaultEmbedEdit(interaction, `No results found for that query. Make sure your query is in correct format and the dates are valid.`)
                         return
                     }
 
-                    DisplayHotels(interaction, res)
+                    DisplayHotels(interaction, res, location.replace(/\b\w/g, l => l.toUpperCase()), checkInDate, checkOutDate, numAdults)
 
                 });
 

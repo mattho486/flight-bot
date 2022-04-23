@@ -109,12 +109,16 @@ async function DisplayPlaces(interaction, data, location, radius, name, country)
 
                     }
                     let newDesc = ""
+                    let lat = json.point.lat
+                    let lon = json.point.lon
+                    let googleLink = `https://maps.google.com/?q=${lat},${lon}`
 
                     try {
-                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\n\n${json.wikipedia_extracts.text}\`\`\``
+                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road}, ${json.address.city}, ${json.address.state}\n\n${json.wikipedia_extracts.text}\`\`\``
                     } catch (e) {
-                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\`\`\``
+                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road}, ${json.address.city}, ${json.address.state}\`\`\``
                     }
+                    newDesc += `\n[Attraction on Google Maps](${googleLink})`
                     embed.setDescription(newDesc)
 
                     if (currIndex !== 0) {

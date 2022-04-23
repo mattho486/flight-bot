@@ -114,7 +114,7 @@ async function DisplayPlaces(interaction, data, location, radius, name, country)
                     let googleLink = `https://maps.google.com/?q=${lat},${lon}`
 
                     try {
-                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road}, ${json.address.city}, ${json.address.state}\n\n${json.wikipedia_extracts.text}\`\`\``
+                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road}, ${json.address.city}, ${json.address.state}\`\`\`\n\`\`\`yaml\n${json.wikipedia_extracts.text}\`\`\``
                     } catch (e) {
                         newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road}, ${json.address.city}, ${json.address.state}\`\`\``
                     }

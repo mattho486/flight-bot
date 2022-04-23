@@ -10,7 +10,7 @@ const {DisplayPlaces} = require("../helpers/DisplayPlaces");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('attractions')
-        .setDescription('Look up historical/future or real-time flight information')
+        .setDescription('Look up interesting places near a location')
         .addStringOption(option => option.setName('location').setDescription('Region, city, village, etc.').setRequired(true))
         .addStringOption(option => option.setName('radius').setDescription('Radius from location, 500 by default')),
     async execute(interaction) {

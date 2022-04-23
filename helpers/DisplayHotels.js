@@ -7,21 +7,21 @@ const {PlacesButtonBuilder} = require("./PlacesButtonBuilder");
 
 
 
-async function DisplayPlaces(interaction, data, location, radius, name, country) {
+async function DisplayHotels(interaction, data) {
 
     async function setDescription(curr, em) {
         em.setDescription(`\`\`\`yaml\nName: ${data[curr].properties.name}\nRating: ${data[curr].properties.rate} / 10\nDistance: ${Math.round(data[curr].properties.dist)} meters\n\nClick on "Details" button for more information\`\`\``)
     }
 
     let currIndex = 0
-    const length = data.length
+    const res = data.searchResults.results
+    const length = res.length
 
     const embed = new MessageEmbed()
         .setColor('#25548c')
-        .setAuthor({ name: 'Attractions', iconURL: interaction.user.avatarURL()})
-        .setTitle(`**Interesting places near ${name}, ${country} within ${radius} meters**`)
+        .setAuthor({ name: 'Hotels', iconURL: interaction.user.avatarURL()})
+        .setTitle(`**Hotels in ${location}**`)
         .setFooter({ text: `Showing result ${currIndex+1} of ${length}`});
-
 
     await setDescription(currIndex, embed)
 
@@ -111,9 +111,9 @@ async function DisplayPlaces(interaction, data, location, radius, name, country)
                     let newDesc = ""
 
                     try {
-                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\n\n${json.wikipedia_extracts.text}\`\`\``
+                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[curr].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\n\n${json.wikipedia_extracts.text}\`\`\``
                     } catch (e) {
-                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[currIndex].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\`\`\``
+                        newDesc = `\`\`\`yaml\nName: ${json.name}\nRating: ${data[curr].properties.rate} / 10\nDistance: ${Math.round(data[currIndex].properties.dist)} meters\nAddress: ${json.address.road} ${json.address.city}, ${json.address.state}\`\`\``
                     }
                     embed.setDescription(newDesc)
 
@@ -145,4 +145,4 @@ async function DisplayPlaces(interaction, data, location, radius, name, country)
 
 }
 
-module.exports = {DisplayPlaces}
+module.exports = {DisplayHotels}

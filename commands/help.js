@@ -12,6 +12,7 @@ module.exports = {
             .setAuthor({ name: 'Help', iconURL: interaction.user.avatarURL()})
             //.setThumbnail('') FLIGHT BOT LOGO
             .addField(name = "Flight Tracker", "`flightlookup`")
+            .addField(name = "Locations", "`attractions`, `hotels`")
 
         await interaction.reply({ embeds: [helpEmbed] });
     },
